@@ -42,29 +42,29 @@ public class UserRepository {
         Document query = new Document(USER_ID, new ObjectId(userId));
         return userCollection.find().first() == null;
     }
-    public void executeRoll(String userId) throws Exception {
-        Document query = new Document(USER_ID, new ObjectId(userId));
-        Document userDoc = userCollection.find(query).limit(1).first();
-        assert userDoc != null;
-        User user = convertFromDocument(userDoc);
-        if(user.getNumTurns() >= LuckyDrawTurns.getAmount()){
-            throw new BusinessException(INVALID.getCode(), "The player's has ended!");
-        }
-        Document update = new Document("$inc", new Document(NUM_TURNS, +1));
-        userCollection.updateOne(query, update);
-    }
-    public boolean isValidNumRoll(String userId) throws Exception {
-        Document query = new Document(USER_ID, new ObjectId(userId));
-        Document userDoc = userCollection.find(query).limit(1).first();
-        assert userDoc != null;
-        return userDoc.getInteger(NUM_TURNS) < LuckyDrawTurns.getAmount();
-    }
-    public void acceptRoll(String userId) throws Exception {
-        Document query = new Document(USER_ID, new ObjectId(userId));
-        Document update = new Document("$set", new Document(NUM_TURNS, LuckyDrawTurns.getAmount()));
-
-        userCollection.updateOne(query, update);
-    }
+//    public void executeRoll(String userId) throws Exception {
+//        Document query = new Document(USER_ID, new ObjectId(userId));
+//        Document userDoc = userCollection.find(query).limit(1).first();
+//        assert userDoc != null;
+//        User user = convertFromDocument(userDoc);
+//        if(user.getNumTurns() >= LuckyDrawTurns.getAmount()){
+//            throw new BusinessException(INVALID.getCode(), "The player's has ended!");
+//        }
+//        Document update = new Document("$inc", new Document(NUM_TURNS, +1));
+//        userCollection.updateOne(query, update);
+//    }
+//    public boolean isValidNumRoll(String userId) throws Exception {
+//        Document query = new Document(USER_ID, new ObjectId(userId));
+//        Document userDoc = userCollection.find(query).limit(1).first();
+//        assert userDoc != null;
+//        return userDoc.getInteger(NUM_TURNS) < LuckyDrawTurns.getAmount();
+//    }
+//    public void acceptRoll(String userId) throws Exception {
+//        Document query = new Document(USER_ID, new ObjectId(userId));
+//        Document update = new Document("$set", new Document(NUM_TURNS, LuckyDrawTurns.getAmount()));
+//
+//        userCollection.updateOne(query, update);
+//    }
     public int getNumRoll(String userId) throws Exception {
         Document query = new Document(USER_ID, new ObjectId(userId));
         Document userDoc = userCollection.find(query).limit(1).first();
@@ -75,9 +75,8 @@ public class UserRepository {
     public User convertFromDocument(Document document) throws Exception{
         String id = document.getObjectId(USER_ID).toString();
         String name = document.getString(NAME);
-        int numTurns = document.getInteger(NUM_TURNS);
 
-        return new User(id, name, numTurns);
+        return new User(id, name);
     }
 
 }

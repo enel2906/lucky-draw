@@ -11,6 +11,23 @@ public class Award {
     private String userId;
     private String type;
 
+    private int numTurns;
+
+    public int getNumTurns() {
+        return numTurns;
+    }
+
+    public void setNumTurns(int numTurns) {
+        this.numTurns = numTurns;
+    }
+
+    public Award(String id, String userId, String type, int numTurns) {
+        this.id = id;
+        this.userId = userId;
+        this.type = type;
+        this.numTurns = numTurns;
+    }
+
     public String getId() {
         return id;
     }

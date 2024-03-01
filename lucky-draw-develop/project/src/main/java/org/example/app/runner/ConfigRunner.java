@@ -17,7 +17,6 @@ public class ConfigRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // Xóa toàn bộ dữ liệu trong collection session khi ứng dụng khởi động
         sessionService.deleteAllSessions();
     }
 }

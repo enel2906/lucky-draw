@@ -45,25 +45,15 @@ public class RollAPI extends CommonAPI<RollRequest, RollResponse> {
     public RollResponse doExecute(RollRequest requestData) throws Exception {
         String token = requestData.getToken();
         String userId = sessionService.getUserId(token);
-
-        Lock userLock = userIdLocks.computeIfAbsent(userId, k -> new ReentrantLock());
-
-        if(!userLock.tryLock()){
-            throw new BusinessException(REQUEST.getCode(), "Your turn are executing in another device or ip");
-        }
-        try {
-            int numRoll = userService.getNumRoll(userId);
-            if (numRoll > 0 && numRoll < LuckyDrawTurns.getAmount()) {
-                String type = awardService.getPrize(userId);
-                awardService.deleteAward(userId);
-                prizeService.rollBack(type);
+        if(awardService.isAlreadyHasPrize(userId)){
+            if(!awardService.isValidNumRoll(userId)){
+                throw new BusinessException(REQUEST.getCode(), "You have reached maximum turns");
             }
-            userService.executeRoll(userId);
-            String type = prizeService.rollPrize();
-            awardService.addNewAward(userId, type);
-            return new RollResponse(type);
-        } finally {
-            userLock.unlock();
+            String oldType = awardService.getPrize(userId);
+            prizeService.rollBack(oldType);
         }
+        String type = prizeService.rollPrize();
+        awardService.updateRoll(userId, type);
+        return new RollResponse(type);
     }
 }

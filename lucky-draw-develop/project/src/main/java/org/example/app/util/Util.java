@@ -1,5 +1,7 @@
 package org.example.app.util;
 
+import org.example.app.constant.Prize;
+
 import java.lang.reflect.Field;
 import java.time.LocalTime;
 import java.util.*;
@@ -13,7 +15,17 @@ public class Util {
         return UUID.randomUUID().toString();
     }
 
+    public static String getRandomStringInList(ArrayList<String> listString){
+        Random random = new Random();
+        int randomIndex = random.nextInt(listString.size());
+        return listString.get(randomIndex);
+    }
 
+    public static Prize getRandomPrize(List<Prize> prizes){
+        Random random = new Random();
+        int randomIndex = random.nextInt(prizes.size());
+        return prizes.get(randomIndex);
+    }
 
     public static void sleep(Integer timeSleep){
         try {

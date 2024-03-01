@@ -16,16 +16,4 @@ public class UserService {
     public boolean isNullUser(String userId) throws Exception {
         return userRepository.isNullUser(userId);
     }
-    public void executeRoll(String userId) throws Exception {
-        userRepository.executeRoll(userId);
-    }
-    public boolean isValidNumRoll(String userId) throws Exception {
-        return userRepository.isValidNumRoll(userId);
-    }
-    public void acceptRoll(String userId) throws Exception {
-        userRepository.acceptRoll(userId);
-    }
-    public int getNumRoll(String userId) throws Exception {
-        return userRepository.getNumRoll(userId);
-    }
 }

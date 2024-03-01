@@ -11,7 +11,7 @@ public class User {
     @Field("_id")
     private String userId;
     private String name;
-    private int numTurns;
+
 
     public String getUserId() {
         return userId;
@@ -29,25 +29,16 @@ public class User {
         this.name = name;
     }
 
-    public int getNumTurns() {
-        return numTurns;
-    }
-
-    public void setNumTurns(int numTurns) {
-        this.numTurns = numTurns;
-    }
 
     public User(String name, int numTurns) {
         this.name = name;
-        this.numTurns = numTurns;
     }
 
     public User() {
     }
 
-    public User(String userId, String name, int numTurns) {
+    public User(String userId, String name) {
         this.userId = userId;
         this.name = name;
-        this.numTurns = numTurns;
     }
 }

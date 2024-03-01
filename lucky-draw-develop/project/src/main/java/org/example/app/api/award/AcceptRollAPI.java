@@ -40,7 +40,7 @@ public class AcceptRollAPI extends CommonAPI<AcceptRollRequest, AcceptRollRespon
         if(type == null){
             throw new BusinessException(INVALID.getCode(), "You haven't roll yet");
         }
-        userService.acceptRoll(userId);
+        awardService.acceptRoll(userId);
         return new AcceptRollResponse(type);
     }
 }
